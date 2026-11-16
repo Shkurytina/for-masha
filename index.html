@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#efe5d5" />
+  <meta name="description" content="Для моей красноволосой бестии ❤️" />
+  <title>Для моей красноволосой бестии ❤️</title>
+  <link rel="preload" as="image" href="assets/cover.webp" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="locked">
+  <div class="grain" aria-hidden="true"></div>
+
+  <section class="cover" id="cover">
+    <img class="cover__photo" src="assets/cover.webp" alt="Маша" />
+    <div class="cover__shade"></div>
+    <div class="cover__content">
+      <div class="tiny-label">личное • только для тебя</div>
+      <h1>Для моей<br><span>красноволосой бестии</span> ❤️</h1>
+      <p>У меня для тебя кое-что есть.<br>Но сначала…</p>
+      <button class="open-button" id="openAlbum">Открыть</button>
+    </div>
+  </section>
+
+  <button class="sound-button" id="soundToggle" aria-label="Включить или выключить музыку" title="Музыка">♫</button>
+
+  <main id="album" class="album" aria-hidden="true">
+    <section class="intro paper-section reveal">
+      <span class="handwritten">20.06.2026</span>
+      <h2>С этого дня у меня появилось наше «мы».</h2>
+      <p>И вот несколько моментов, которые я хочу сохранить.</p>
+    </section>
+
+    <section class="spread spread--first reveal">
+      <article class="polaroid rotate-left" data-note="first-note">
+        <img src="assets/first.webp" alt="Одна из наших ранних совместных фотографий" loading="lazy" />
+        <div class="polaroid__caption">А это мы ещё в самом начале.</div>
+        <button class="secret secret--heart" aria-label="Открыть скрытую записку">♥</button>
+      </article>
+      <div class="copy-card">
+        <p>Я тогда ещё не знал, насколько сильно ты станешь частью моей жизни.</p>
+      </div>
+    </section>
+
+    <section class="spread reveal">
+      <article class="polaroid rotate-right">
+        <img src="assets/walk.webp" alt="Мы идём за руку" loading="lazy" />
+      </article>
+      <div class="copy-card copy-card--small">
+        <p>Мне нравится просто идти рядом с тобой.</p>
+        <span>Желательно в одну сторону.</span>
+      </div>
+    </section>
+
+    <section class="collage reveal">
+      <article class="polaroid polaroid--natural polaroid--mirror rotate-left" data-note="effort-note">
+        <img src="assets/mirror.webp?v=2" alt="Мы у зеркала" loading="lazy" />
+        <div class="polaroid__caption">Всё-таки красивая у меня девушка.</div>
+        <button class="secret secret--dot" aria-label="Открыть скрытую записку">♡</button>
+      </article>
+      <article class="polaroid polaroid--small rotate-right">
+        <img src="assets/selfie.webp" alt="Наше селфи" loading="lazy" />
+        <div class="polaroid__caption">Мне тоже иногда удаётся нормально получиться.</div>
+      </article>
+    </section>
+
+    <section class="spread reveal">
+      <article class="polaroid rotate-right">
+        <img src="assets/shoulders.webp" alt="Маша сидит у меня на плечах" loading="lazy" />
+      </article>
+      <div class="copy-card copy-card--fun">
+        <p>Говорят, в отношениях важно поддерживать друг друга.</p>
+        <span>Я стараюсь буквально.</span>
+      </div>
+    </section>
+
+    <section class="bridge-story reveal">
+      <article class="polaroid rotate-left">
+        <img src="assets/bridge-smile.webp" alt="Мы вместе у моста" loading="lazy" />
+        <div class="polaroid__caption">Вот такие моменты я хочу запоминать.</div>
+      </article>
+      <article class="polaroid rotate-right">
+        <img src="assets/bridge-look.webp" alt="Мы смотрим друг на друга у моста" loading="lazy" />
+        <div class="polaroid__caption">Рядом с тобой мне хорошо. Вот так просто.</div>
+      </article>
+    </section>
+
+    <section class="portrait-page reveal">
+      <article class="polaroid portrait-card rotate-left">
+        <img src="assets/eyes.webp" alt="Портрет Маши" loading="lazy" />
+        <div class="polaroid__caption">Да. Вот именно эти глаза.</div>
+      </article>
+      <article class="polaroid portrait-card rotate-right" id="beastCard">
+        <img src="assets/beast.webp" alt="Красноволосая Маша" loading="lazy" />
+        <button class="beast-title" id="beastTitle" type="button">Красноволосая бестия собственной персоной.</button>
+        <div class="polaroid__caption">Выглядит безобидно. Не верьте.</div>
+      </article>
+    </section>
+
+    <section class="adventure reveal">
+      <article class="polaroid rotate-left">
+        <img src="assets/adventure.webp" alt="Наше совместное приключение" loading="lazy" />
+        <div class="polaroid__caption">Ещё одно наше приключение.</div>
+      </article>
+      <article class="polaroid polaroid--small rotate-right">
+        <img src="assets/rail.webp" alt="Мы в поездке" loading="lazy" />
+        <div class="polaroid__caption">И ещё одно.</div>
+      </article>
+    </section>
+
+    <section class="counter-section reveal">
+      <div class="counter-tape"></div>
+      <p>А ведь всё началось</p>
+      <h2>20.06.2026</h2>
+      <div class="days" id="daysTogether">—</div>
+      <div class="days-label" id="daysLabel">дней вместе</div>
+      <span>И мне всё ещё мало.</span>
+    </section>
+
+    <section class="tender reveal">
+      <article class="polaroid rotate-right" data-note="dont-note">
+        <img src="assets/cheek.webp" alt="Маша целует меня в щёку" loading="lazy" />
+        <div class="polaroid__caption">Спасибо тебе за любовь, которую ты мне даёшь.</div>
+        <button class="secret secret--dont" aria-label="Не нажимать">не нажимать</button>
+      </article>
+      <div class="copy-card copy-card--warm">
+        <p>За заботу.<br>За тепло.<br>За то, что ты рядом.</p>
+      </div>
+    </section>
+
+    <section class="almost-end reveal">
+      <article class="polaroid polaroid--wide rotate-left">
+        <img src="assets/fountain.webp" alt="Мы вместе у фонтана" loading="lazy" />
+        <div class="polaroid__caption">Мне очень нравится наше «мы».</div>
+      </article>
+    </section>
+
+    <section class="final-photo reveal">
+      <article class="polaroid polaroid--hero rotate-right">
+        <img src="assets/final.webp" alt="Мы целуемся ночью" loading="lazy" />
+        <div class="polaroid__caption polaroid__caption--final">
+          <strong>Я тебя люблю, Маша.</strong>
+          <span>Даже когда ты красноволосая бестия.<br>Особенно тогда.</span>
+        </div>
+      </article>
+    </section>
+
+    <section class="gift-final reveal">
+      <div class="gift-final__inner">
+        <span class="handwritten">ну всё…</span>
+        <h2>А теперь можно получить<br>настоящий подарок ❤️</h2>
+      </div>
+    </section>
+  </main>
+
+  <div class="note-overlay" id="noteOverlay" hidden>
+    <button class="note-overlay__backdrop" aria-label="Закрыть записку"></button>
+    <div class="note-paper" role="dialog" aria-modal="true" aria-live="polite">
+      <button class="note-close" aria-label="Закрыть">×</button>
+      <p id="noteText"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

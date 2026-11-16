@@ -24,60 +24,55 @@ function updateCounter() {
 }
 updateCounter();
 
-// Тихий генеративный ambient без внешнего аудиофайла.
-let audioCtx;
-let masterGain;
-let nodes = [];
+// Фоновая музыка: запускается после нажатия «Открыть».
+const bgMusic = new Audio('assets/spring-flowers.mp3');
+bgMusic.loop = true;
+bgMusic.preload = 'auto';
+bgMusic.volume = 0;
+
 let musicStarted = false;
 let muted = false;
+let fadeTimer;
+const TARGET_VOLUME = 0.18;
 
-function createAmbient() {
-  if (musicStarted) return;
-  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  masterGain = audioCtx.createGain();
-  masterGain.gain.value = 0.035;
-  masterGain.connect(audioCtx.destination);
+function fadeMusicTo(target, duration = 900) {
+  clearInterval(fadeTimer);
+  const from = bgMusic.volume;
+  const steps = 18;
+  const stepMs = Math.max(20, Math.floor(duration / steps));
+  let step = 0;
 
-  const filter = audioCtx.createBiquadFilter();
-  filter.type = 'lowpass';
-  filter.frequency.value = 900;
-  filter.Q.value = 0.6;
-  filter.connect(masterGain);
+  fadeTimer = setInterval(() => {
+    step += 1;
+    const next = from + (target - from) * (step / steps);
+    bgMusic.volume = Math.min(1, Math.max(0, next));
+    if (step >= steps) clearInterval(fadeTimer);
+  }, stepMs);
+}
 
-  [146.83, 220, 293.66].forEach((freq, index) => {
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = index === 1 ? 'triangle' : 'sine';
-    osc.frequency.value = freq;
-    gain.gain.value = index === 1 ? 0.12 : 0.08;
-    osc.connect(gain).connect(filter);
-    osc.start();
-    nodes.push(osc, gain);
-  });
-
-  const lfo = audioCtx.createOscillator();
-  const lfoGain = audioCtx.createGain();
-  lfo.frequency.value = 0.08;
-  lfoGain.gain.value = 0.015;
-  lfo.connect(lfoGain).connect(masterGain.gain);
-  lfo.start();
-  nodes.push(lfo, lfoGain, filter);
-  musicStarted = true;
+async function startMusic() {
+  if (!musicStarted) {
+    try {
+      await bgMusic.play();
+      musicStarted = true;
+      fadeMusicTo(muted ? 0 : TARGET_VOLUME, 1200);
+    } catch (error) {
+      console.warn('Браузер не разрешил запустить музыку:', error);
+    }
+  } else if (bgMusic.paused) {
+    await bgMusic.play();
+  }
 }
 
 function setMuted(value) {
   muted = value;
-  if (masterGain && audioCtx) {
-    masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
-    masterGain.gain.linearRampToValueAtTime(muted ? 0 : 0.035, audioCtx.currentTime + 0.25);
-  }
+  fadeMusicTo(muted ? 0 : TARGET_VOLUME, 250);
   soundToggle.classList.toggle('muted', muted);
   soundToggle.setAttribute('aria-label', muted ? 'Включить музыку' : 'Выключить музыку');
 }
 
 openButton.addEventListener('click', async () => {
-  createAmbient();
-  if (audioCtx?.state === 'suspended') await audioCtx.resume();
+  await startMusic();
   cover.classList.add('is-open');
   album.classList.add('visible');
   album.setAttribute('aria-hidden', 'false');
@@ -87,8 +82,7 @@ openButton.addEventListener('click', async () => {
 });
 
 soundToggle.addEventListener('click', async () => {
-  if (!musicStarted) createAmbient();
-  if (audioCtx?.state === 'suspended') await audioCtx.resume();
+  if (!musicStarted) await startMusic();
   setMuted(!muted);
 });
 
